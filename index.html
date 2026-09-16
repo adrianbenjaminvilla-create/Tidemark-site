@@ -612,10 +612,10 @@
         <span style="color:var(--stone); font-size:0.95rem; font-family:'Inter',sans-serif;">Serving Lake Elsinore & the Inland Empire</span>
       </div>
     </div>
-    <form id="quoteForm" name="quote-request" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-      <input type="hidden" name="form-name" value="quote-request">
+    <form id="quoteForm" name="quote-request" method="POST" action="https://formspree.io/f/maenynjv">
+      <input type="hidden" name="_next" value="https://adrianbenjaminvilla-create.github.io/Tidemark-site/thanks.html">
       <p style="display:none;">
-        <label>Don't fill this out if you're human: <input name="bot-field"></label>
+        <label>Don't fill this out if you're human: <input name="_gotcha"></label>
       </p>
       <div class="form-row">
         <div>
@@ -714,39 +714,9 @@
     setPosition(50);
   })();
 
-  (function(){
-    var form = document.getElementById('quoteForm');
-    var thanks = document.getElementById('quoteThanks');
-    if(!form) return;
-
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      var data = new FormData(form);
-      var submitBtn = form.querySelector('.form-submit');
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
-
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString()
-      })
-      .then(function(response){
-        if(response.ok){
-          form.style.display = 'none';
-          thanks.style.display = 'block';
-        } else {
-          throw new Error('Submission failed with status ' + response.status);
-        }
-      })
-      .catch(function(err){
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Request my quote';
-        alert('Something went wrong sending your request. Please call or text (714) 913-7571 directly instead.');
-        console.error('Quote form submission error:', err);
-      });
-    });
-  })();
+  // Quote form now submits directly to Formspree (no JS interception) —
+  // this avoids any fetch/CORS edge cases. Formspree shows its own
+  // confirmation after a successful submit.
 </script>
 
 </body>
